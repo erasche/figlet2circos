@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+var fs = require('fs');
+var util = require('util');
+
+const TextToSVG = require('text-to-svg');
+const basePath = process.argv[1].substr(0, process.argv[1].length - "text-to-svg".length);
+const textToSVG = TextToSVG.loadSync(basePath + '/UbuntuMono-R.ttf');
+const attributes = {fill: 'black', stroke: 'none'};
+const options = {x: 0, y: 0, fontSize: 72, anchor: 'top', attributes: attributes};
+
+function ex(cmd){
+        console.log(cmd);
+}
+
+console.log(textToSVG.getSVG(process.argv[2], options))
+//ex('./node_modules/.bin/svgexport logo-frame-' + n + '.svg logo-frame-' + n + '.png png 100% 5x pad');

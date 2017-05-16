@@ -1,16 +1,17 @@
 #!/bin/bash
-flag='hello_world'
+flag='abcdefghijklmnopqrstuvwx'
+mkdir -p data svgs
 for (( i=0; i<${#flag}; i++  )); do
 	char="${flag:$i:1}"
 	if [ ! -f "svgs/$char.svg" ]; then
 
-		../../../logo/text-to-svg "${flag:$i:1}" > $char.a.svg
-		../../../logo/node_modules/.bin/svgexport $char.a.svg $char.a.png png 100% 500:
+		scripts/text-to-svg "${flag:$i:1}" > $char.a.svg
+		node_modules/.bin/svgexport $char.a.svg $char.a.png png 100% 500:
 		rm $char.a.svg
 		convert -flatten -gravity center -extent 1000x1000 $char.a.png $char.png
 		rm -f "$char.a.png"
 		# Convert to SVG links.
-		./main -i "$char.png" -j 8 -m 9 -o "svgs/$char.svg" -n 1000 -v
+		./primitive -i "$char.png" -j 8 -m 9 -o "svgs/$char.svg" -n 200 -v
 		rm -f "$char.png"
 	fi
 	## Now convert to links file.
@@ -22,7 +23,7 @@ for (( i=0; i<${#flag}; i++  )); do
 	if [ $i -lt 10 ]; then
 		outname="0$outname"
 	fi
-	python svg2links.py "svgs/$char.svg" $chr_name $chr_size > data/$outname
+	python scripts/svg2links.py "svgs/$char.svg" $chr_name $chr_size > data/$outname
 	grep "$chr_name " karyotype.human.hg38.txt > data/karyotype.$chr_name.txt
 
 

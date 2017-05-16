@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "svgexport": "^0.3.2",
+    "text-to-svg": "^3.1.0"
+  }
+}
